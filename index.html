@@ -87,6 +87,19 @@
     .cta h2{font-size:clamp(1.4rem,4vw,2rem);margin-bottom:10px}
     .cta p{opacity:.8;margin-bottom:26px}
     footer{background:#0c0c0c;color:#8b8f96;text-align:center;padding:32px 20px;font-size:.85rem}
+
+    /* 右上固定の質問フォーム */
+    #ask-widget{position:fixed;top:16px;right:16px;z-index:9999;width:260px;font-size:.85rem}
+    #ask-toggle{background:var(--accent);color:#fff;border:none;border-radius:24px;padding:10px 18px;cursor:pointer;font-weight:700;font-size:.9rem;box-shadow:0 4px 16px rgba(0,0,0,.25);width:100%;text-align:left}
+    #ask-toggle::after{content:'▼';float:right}
+    #ask-toggle.open::after{content:'▲'}
+    #ask-form{background:#fff;border-radius:12px;box-shadow:0 6px 24px rgba(0,0,0,.18);padding:16px;margin-top:6px;display:none}
+    #ask-form.show{display:block}
+    #ask-form p{margin:0 0 8px;font-weight:700;color:var(--ink)}
+    #ask-form input,#ask-form textarea{width:100%;box-sizing:border-box;border:1px solid #ccc;border-radius:6px;padding:7px 10px;font-size:.85rem;margin-bottom:8px;font-family:inherit}
+    #ask-form textarea{height:80px;resize:vertical}
+    #ask-form button{background:var(--accent);color:#fff;border:none;border-radius:6px;padding:9px;width:100%;font-weight:700;cursor:pointer;font-size:.9rem}
+    #ask-form .thanks{color:var(--accent);font-weight:700;text-align:center;padding:8px 0;display:none}
   </style>
 </head>
 <body>
@@ -164,5 +177,35 @@
   </section>
 
   <footer>© カマタホーム — ハンズオンで作った GitHub Pages サイト</footer>
+
+  <div id="ask-widget">
+    <button id="ask-toggle" onclick="toggleAsk()">質問する</button>
+    <div id="ask-form">
+      <p>お気軽にご質問ください</p>
+      <input type="text" id="ask-name" placeholder="お名前" />
+      <input type="email" id="ask-email" placeholder="メールアドレス" />
+      <textarea id="ask-msg" placeholder="ご質問・お問い合わせ内容"></textarea>
+      <button onclick="sendAsk()">送信する</button>
+      <div class="thanks" id="ask-thanks">送信しました！折り返しご連絡します。</div>
+    </div>
+  </div>
+  <script>
+    function toggleAsk(){
+      var btn=document.getElementById('ask-toggle');
+      var form=document.getElementById('ask-form');
+      btn.classList.toggle('open');
+      form.classList.toggle('show');
+    }
+    function sendAsk(){
+      var name=document.getElementById('ask-name').value;
+      var email=document.getElementById('ask-email').value;
+      var msg=document.getElementById('ask-msg').value;
+      if(!name||!email||!msg){alert('すべての項目を入力してください');return;}
+      document.getElementById('ask-thanks').style.display='block';
+      document.getElementById('ask-name').value='';
+      document.getElementById('ask-email').value='';
+      document.getElementById('ask-msg').value='';
+    }
+  </script>
 </body>
 </html>
